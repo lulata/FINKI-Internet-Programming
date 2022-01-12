@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <p>Input a new book</p>
+    <label for="author">Author</label>
+    <input type="text" id="author" />
+    <br />
+    <label for="title">Title</label>
+    <input type="text" id="title" />
+    <br />
+    <label for="year">Read</label>
+    <br />
+    <input type="radio" name="read" id="bookRead" value="yes" />
+    <label for="bookRead">Yes</label>
+    <input type="radio" name="read" id="bookRead" value="no" />
+    <label for="bookRead">No</label>
+    <br />
+    <button id="add">Add</button>
+    <button id="btn">Print</button>
+    <p>Results:</p>
+    <div id="results"></div>
+
+    <script>
+      var Book = {
+        title: [
+          "The Hobbit",
+          "The Fellowship of the Ring",
+          "The Two Towers",
+          "The Return of the King",
+        ],
+        author: [
+          "J.R.R. Tolkien",
+          "J.R.R. Tolkien",
+          "J.R.R. Tolkien",
+          "J.R.R. Tolkien",
+        ],
+        alreadyLeft: [true, false, true, false],
+      };
+
+      function printObject(obj) {
+        var result = "";
+        for (var i = 0; i < obj.title.length; i++) {
+          if (obj.alreadyLeft[i]) {
+            result +=
+              "You aldready read " +
+              obj.title[i] +
+              " by " +
+              obj.author[i] +
+              ".";
+          } else {
+            result +=
+              "You still need to read " +
+              obj.title[i] +
+              " by " +
+              obj.author[i] +
+              ".";
+          }
+          result += "<br>";
+        }
+        document.getElementById("results").innerHTML = result;
+      }
+
+      document.getElementById("btn").addEventListener("click", function () {
+        printObject(Book);
+      });
+
+      document.getElementById("add").addEventListener("click", function () {
+        var read;
+        if (document.getElementById("bookRead").checked) {
+          read = true;
+        } else {
+          read = false;
+        }
+        var newBook = {
+          title: document.getElementById("title").value,
+          author: document.getElementById("author").value,
+          read: read,
+        };
+        Book.title.push(newBook.title);
+        Book.author.push(newBook.author);
+        Book.alreadyLeft.push(newBook.read);
+        printObject(Book);
+      });
+    </script>
+  </body>
+</html>

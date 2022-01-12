@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <label for="radius">Insert radius</label>
+    <input type="text" id="radius">
+    <br>
+    <label for="height">Insert height </label>
+    <input type="text" id="height">
+    <br>
+    <button id="btn">Calculate</button>
+
+    <div>
+        <p>Result:</p>
+        <p id="result"></p>
+    </div>
+    
+    <script>
+        class Cyclinder {
+            constructor(radius, height) {
+                this.radius = radius;
+                this.height = height;
+            }
+
+            getVolume() {
+                return this.radius * this.radius * Math.PI * this.height;
+            }
+        }
+
+        let btn = document.getElementById('btn');
+        let result = document.getElementById('result');
+
+        btn.addEventListener('click', function() {
+            let radius = document.getElementById('radius').value;
+            let height = document.getElementById('height').value;
+
+            let cylinder = new Cyclinder(radius, height);
+
+            result.innerHTML = cylinder.getVolume();
+        });
+    </script>
+</body>
+</html>

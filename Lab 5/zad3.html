@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script
+      src="https://kit.fontawesome.com/98decdfc42.js"
+      crossorigin="anonymous"
+    ></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <style>
+       html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #ffffff;
+  font-family: "Permanent Marker", cursive;
+  font-size: 16px;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+h1 {
+  font-family: "Gloria Hallelujah", cursive;
+}
+
+
+
+.deck {
+  width: 85%;
+  background: #716f71;
+  padding: 1rem;
+  border-radius: 4px;
+  box-shadow: 8px 9px 26px 0 rgba(46, 61, 73, 0.5);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  margin: 0 0 3em;
+}
+
+.deck .card {
+  height: 3.7rem;
+  width: 3.7rem;
+  margin: 0.2rem 0.2rem;
+  background: #141214;
+  font-size: 0;
+  color: #ffffff;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
+}
+
+.deck .card.open {
+  transform: rotateY(0);
+  background: #02b3e4;
+  cursor: default;
+  animation-name: flipInY;
+  -webkit-backface-visibility: visible !important;
+  backface-visibility: visible !important;
+  animation-duration: 0.75s;
+}
+
+.deck .card.show {
+  font-size: 33px;
+}
+
+.deck .card.match {
+  cursor: default;
+  background: #e5f720;
+  font-size: 33px;
+  animation-name: rubberBand;
+  -webkit-backface-visibility: visible !important;
+  backface-visibility: visible !important;
+  animation-duration: 0.75s;
+}
+
+.deck .card.unmatched {
+  animation-name: pulse;
+  -webkit-backface-visibility: visible !important;
+  backface-visibility: visible !important;
+  animation-duration: 0.75s;
+  background: #e2043b;
+}
+
+.deck .card.disabled {
+  pointer-events: none;
+  opacity: 0.9;
+}
+
+
+.score-panel {
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+.score-panel .stars {
+  margin: 0;
+  padding: 0;
+  display: inline-block;
+  margin: 0 5px 0 0;
+}
+
+.score-panel .stars li {
+  list-style: none;
+  display: inline-block;
+}
+
+.score-panel .restart {
+  float: right;
+  cursor: pointer;
+}
+
+.fa-star {
+  color: #ffd700;
+}
+
+.timer {
+  display: inline-block;
+  margin: 0 1rem;
+}
+
+
+
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  transition: opacity 500ms;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.overlay:target {
+  visibility: visible;
+  opacity: 1;
+}
+
+.popup {
+  margin: 70px auto;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 5px;
+  width: 85%;
+  position: relative;
+  transition: all 5s ease-in-out;
+  font-family: "Gloria Hallelujah", cursive;
+}
+
+.popup h2 {
+  margin-top: 0;
+  color: #333;
+  font-family: Tahoma, Arial, sans-serif;
+}
+
+.popup .close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  transition: all 200ms;
+  font-size: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  color: #333;
+}
+
+.popup .close:hover {
+  color: #e5f720;
+}
+
+.popup .content-1,
+.content-2 {
+  max-height: 30%;
+  overflow: auto;
+  text-align: center;
+}
+
+.show {
+  visibility: visible !important;
+  opacity: 100 !important;
+}
+
+#starRating li {
+  display: inline-block;
+}
+
+#play-again {
+  background-color: #141214;
+  padding: 0.7rem 1rem;
+  font-size: 1.1rem;
+  display: block;
+  margin: 0 auto;
+  width: 50%;
+  font-family: "Gloria Hallelujah", cursive;
+  color: #ffffff;
+  border-radius: 5px;
+}
+
+@keyframes flipInY {
+  from {
+    transform: perspective(400px) rotate3d(0, 1, 0, 90deg);
+    animation-timing-function: ease-in;
+    opacity: 0;
+  }
+
+  40% {
+    transform: perspective(400px) rotate3d(0, 1, 0, -20deg);
+    animation-timing-function: ease-in;
+  }
+
+  60% {
+    transform: perspective(400px) rotate3d(0, 1, 0, 10deg);
+    opacity: 1;
+  }
+
+  80% {
+    transform: perspective(400px) rotate3d(0, 1, 0, -5deg);
+  }
+
+  to {
+    transform: perspective(400px);
+  }
+}
+
+@keyframes rubberBand {
+  from {
+    transform: scale3d(1, 1, 1);
+  }
+
+  30% {
+    transform: scale3d(1.25, 0.75, 1);
+  }
+
+  40% {
+    transform: scale3d(0.75, 1.25, 1);
+  }
+
+  50% {
+    transform: scale3d(1.15, 0.85, 1);
+  }
+
+  65% {
+    transform: scale3d(0.95, 1.05, 1);
+  }
+
+  75% {
+    transform: scale3d(1.05, 0.95, 1);
+  }
+
+  to {
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+@keyframes pulse {
+  from {
+    transform: scale3d(1, 1, 1);
+  }
+
+  50% {
+    transform: scale3d(1.2, 1.2, 1.2);
+  }
+
+  to {
+    transform: scale3d(1, 1, 1);
+  }
+}
+
+
+
+@media (max-width: 320px) {
+  .deck {
+    width: 85%;
+  }
+
+  .deck .card {
+    height: 4.7rem;
+    width: 4.7rem;
+  }
+}
+
+
+
+@media (min-width: 768px) {
+  .container {
+    font-size: 22px;
+  }
+
+  .deck {
+    width: 660px;
+    height: 680px;
+  }
+
+  .deck .card {
+    height: 125px;
+    width: 125px;
+  }
+
+  .popup {
+    width: 60%;
+  }
+}
+
+    </style>
+  </head>
+  <body>
+
+    <div class="container">
+        <header>
+            <h1>Meморија</h1>
+        </header>
+      
+        
+      
+        <ul class="deck" id="card-deck">
+          <li class="card" type="diamond">
+            <i class="fa fa-diamond"></i>
+          </li>
+          <li class="card" type="plane">
+            <i class="fa fa-paper-plane-o"></i>
+          </li>
+          <li class="card match" type="anchor">
+            <i class="fa fa-anchor"></i>
+          </li>
+          <li class="card" type="bolt">
+            <i class="fa fa-bolt"></i>
+          </li>
+          <li class="card" type="cube">
+            <i class="fa fa-cube"></i>
+          </li>
+          <li class="card match" type="anchor">
+            <i class="fa fa-anchor"></i>
+          </li>
+          <li class="card" type="leaf">
+            <i class="fa fa-leaf"></i>
+          </li>
+          <li class="card" type="bicycle">
+            <i class="fa fa-bicycle"></i>
+          </li>
+          <li class="card" type="diamond">
+            <i class="fa fa-diamond"></i>
+          </li>
+          <li class="card" type="bomb">
+            <i class="fa fa-bomb"></i>
+          </li>
+          <li class="card" type="leaf">
+            <i class="fa fa-leaf"></i>
+          </li>
+          <li class="card" type="bomb">
+            <i class="fa fa-bomb"></i>
+          </li>
+          <li class="card open show" type="bolt">
+            <i class="fa fa-bolt"></i>
+          </li>
+          <li class="card" type="bicycle">
+            <i class="fa fa-bicycle"></i>
+          </li>
+          <li class="card" type="plane">
+            <i class="fa fa-paper-plane-o"></i>
+          </li>
+          <li class="card" type="cube">
+            <i class="fa fa-cube"></i>
+          </li>
+        </ul>
+      
+        <div id="popup1" class="overlay">
+          <div class="popup">
+            <h2>Congratulations 🎉</h2>
+            <a class="close" href=#>×</a>
+            <div class="content-1">
+              Congratulations you're a winner 🎉🎉
+            </div>
+            <button id="play-again" onclick="playAgain()">
+              Play again 😄</a>
+            </button>
+          </div>
+        </div>
+
+         <button id="reset-again" onclick="playAgain()">
+              Reset </a>
+            </button>
+      
+      </div>
+    <script>
+let card = document.getElementsByClassName("card");
+let cards = [...card];
+const deck = document.getElementById("card-deck");
+let moves = 0;
+let counter = document.querySelector(".moves");
+const stars = document.querySelectorAll(".fa-star");
+let matchedCard = document.getElementsByClassName("match");
+let starsList = document.querySelectorAll(".stars li");
+let closeicon = document.querySelector(".close");
+let modal = document.getElementById("popup1");
+
+var openedCards = [];
+
+function shuffle(array) {
+  var currentIndex = array.length,
+    temporaryValue,
+    randomIndex;
+
+  while (currentIndex !== 0) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
+
+document.body.onload = startGame();
+
+function startGame() {
+  openedCards = [];
+  cards = shuffle(cards);
+  for (var i = 0; i < cards.length; i++) {
+    deck.innerHTML = "";
+    [].forEach.call(cards, function (item) {
+      deck.appendChild(item);
+    });
+    cards[i].classList.remove("show", "open", "match", "disabled");
+  }
+  moves = 0;
+  for (var i = 0; i < stars.length; i++) {
+    stars[i].style.color = "#FFD700";
+    stars[i].style.visibility = "visible";
+  }
+}
+
+var displayCard = function () {
+  this.classList.toggle("open");
+  this.classList.toggle("show");
+  this.classList.toggle("disabled");
+};
+
+function cardOpen() {
+  openedCards.push(this);
+  var len = openedCards.length;
+  if (len === 2) {
+    if (openedCards[0].type === openedCards[1].type) {
+      matched();
+    } else {
+      unmatched();
+    }
+  }
+}
+
+function matched() {
+  openedCards[0].classList.add("match", "disabled");
+  openedCards[1].classList.add("match", "disabled");
+  openedCards[0].classList.remove("show", "open", "no-event");
+  openedCards[1].classList.remove("show", "open", "no-event");
+  openedCards = [];
+}
+
+function unmatched() {
+  openedCards[0].classList.add("unmatched");
+  openedCards[1].classList.add("unmatched");
+  disable();
+  setTimeout(function () {
+    openedCards[0].classList.remove("show", "open", "no-event", "unmatched");
+    openedCards[1].classList.remove("show", "open", "no-event", "unmatched");
+    enable();
+    openedCards = [];
+  }, 1100);
+}
+
+function disable() {
+  Array.prototype.filter.call(cards, function (card) {
+    card.classList.add("disabled");
+  });
+}
+
+function enable() {
+  Array.prototype.filter.call(cards, function (card) {
+    card.classList.remove("disabled");
+    for (var i = 0; i < matchedCard.length; i++) {
+      matchedCard[i].classList.add("disabled");
+    }
+  });
+}
+
+function congratulations() {
+  if (matchedCard.length == 16) {
+    modal.classList.add("show");
+    closeModal();
+  }
+}
+
+function closeModal() {
+  closeicon.addEventListener("click", function (e) {
+    modal.classList.remove("show");
+    startGame();
+  });
+}
+
+function playAgain() {
+  modal.classList.remove("show");
+  startGame();
+}
+
+for (var i = 0; i < cards.length; i++) {
+  card = cards[i];
+  card.addEventListener("click", displayCard);
+  card.addEventListener("click", cardOpen);
+  card.addEventListener("click", congratulations);
+}
+
+    </script>
+  </body>
+</html>

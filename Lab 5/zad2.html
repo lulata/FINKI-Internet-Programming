@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script></script>
+  </head>
+  <body>
+    <div>
+      <div style="text-align: right; float: left">
+        <label id="obid">Обиди 0</label>
+        <p>Погодок: <input id="guess" style="width: 150px" /></p>
+        <button id="pogodi">Погоди</button>
+        <button id="reset">Од почеток</button>
+      </div>
+    </div>
+    <br />
+    <div id="prikaz" style="clear: both"></div>
+
+    <script>
+      var number = Math.floor(1000 + Math.random() * 9000);
+      console.log(number);
+
+      var obid = 0;
+      var guess = document.getElementById("guess");
+      var prikaz = document.getElementById("prikaz");
+      var obidi = document.getElementById("obid");
+      var pogodi = document.getElementById("pogodi");
+      var reset = document.getElementById("reset");
+      flag = 0;
+
+      reset.addEventListener("click", function (e) {
+        e.preventDefault();
+        number = Math.floor(1000 + Math.random() * 9000);
+        console.log(number);
+        obid = 0;
+        guess.value = "";
+        prikaz.innerHTML = "";
+        obidi.innerHTML = "Обиди 0";
+      });
+
+      //watch the game on every pogodi click a
+      pogodi.addEventListener("click", function (e) {
+        e.preventDefault();
+        var guessValue = guess.value;
+        //check to see if hes on his 10th guess and stop the game
+        if (guessValue == number) {
+          if (flag == 0) {
+            prikaz.innerHTML += "ПОГОДОК!";
+          }
+          return;
+        } else if (obid == 10) {
+          if (flag == 0) {
+            prikaz.innerHTML +=
+              "Не успеавте да погодите од 10 обиди.Бројот е " + number;
+            flag = 1;
+          }
+          return;
+        } else {
+          var correctDigits = 0;
+          var correctPosition = 0;
+          var guessArray = guessValue.split("");
+          var numberArray = number.toString().split("");
+          for (var i = 0; i < guessArray.length; i++) {
+            if (guessArray[i] == numberArray[i]) {
+              correctPosition++;
+            }
+          }
+          for (var i = 0; i < guessArray.length; i++) {
+            for (var j = 0; j < numberArray.length; j++) {
+              if (guessArray[i] == numberArray[j]) {
+                correctDigits++;
+              }
+            }
+          }
+          var result =
+            "Има " +
+            correctDigits +
+            ", на место " +
+            correctPosition +
+            " " +
+            guessValue +
+            "<br />";
+          prikaz.innerHTML += result;
+        }
+        obid++;
+        obidi.innerHTML = "Обиди " + obid;
+      });
+    </script>
+  </body>
+</html>

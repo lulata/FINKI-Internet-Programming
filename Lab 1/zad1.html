@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script type="text/javascript">
+      var number = prompt("Enter a three digit number:");
+      if (number.length != 3) {
+        alert("The number is not three digit");
+      } else {
+        var first = number.charAt(0);
+        var last = number.charAt(2);
+        if (first == last) {
+          alert("The number is palindrome");
+        } else {
+          alert("The number is not palindrome");
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <label for="array"> Insert array with comas</label>
+    <input type="text" id="array">
+    <br>
+    <label for="element">Insert element</label>
+    <input type="text" id="element">
+    <button id="rmv">Remove</button>
+
+    <div >
+        <p>Result:</p>
+        <p id="result"></p>
+    </div>
+
+    <script>
+        var array = [];
+        var element;
+        var result = document.getElementById('result');
+
+        document.getElementById('rmv').addEventListener('click', function(){
+            array = document.getElementById('array').value.split(',');
+            newArray= new Array();
+            element = document.getElementById('element').value;
+            for(var i = 0; i < array.length; i++){
+                if(array[i] != element){
+                    newArray.push(array[i]);
+                }
+            }
+
+            result.innerHTML = newArray;
+        });
+    </script>
+</body>
+</html>

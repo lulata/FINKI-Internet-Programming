@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Calculator</h1>
+    <input type="text" name="" id="num1">
+    <label for="num1">a</label>
+    <input type="text" name="" id="num2">
+    <label for="num2">b</label>
+    <br>
+    <input type="radio" name="operation" id="add" value="add">
+    <label for="add">a+b</label>
+    <input type="radio" name="operation" id="sub" value="sub">
+    <label for="sub">a-b</label>
+    <input type="radio" name="operation" id="mul" value="mul">
+    <label for="mul">a*b</label>
+    <input type="radio" name="operation" id="div" value="div">
+    <label for="div">a/b</label>
+    <input type="radio" name="operation" id="sin" value="sin">
+    <label for="sin">sin(a)</label>
+    <input type="radio" name="operation" id="cos" value="cos">
+    <label for="cos">cos(a)</label>
+    <input type="radio" name="operation" id="tan" value="tan">
+    <label for="tan">tg(a)</label>
+    <input type="radio" name="operation" id="absolute" value="absolute">
+    <label for="absolute">[a]</label>
+    <input type="radio" name="operation" id="square" value="square">
+    <label for="square">a <sup>b</sup></label>
+    <input type="radio" name="operation" id="sqrt" value="sqrt">
+    <label for="sqrt"> &#8730 a</label>
+    <br>
+    <input type="submit" name="" id="submit" value="Calculate">
+    <br>
+    <div id="result"></div>
+    <script>
+        var num1 = document.getElementById('num1');
+        var num2 = document.getElementById('num2');
+        var submit = document.getElementById('submit');
+        var result = document.getElementById('result');
+        submit.addEventListener('click', function(e){
+            e.preventDefault();
+            operation = document.querySelector('input[name="operation"]:checked').value;
+            var a = parseFloat(num1.value);
+            var b = parseFloat(num2.value);
+            var res = 0;
+            switch(operation){
+                case 'add':
+                    res = a + b;
+                    break;
+                case 'sub':
+                    res = a - b;
+                    break;
+                case 'mul':
+                    res = a * b;
+                    break;
+                case 'div':
+                    res = a / b;
+                    break;
+                case 'sin':
+                    res = Math.sin(a);
+                    break;
+                case 'cos':
+                    res = Math.cos(a);
+                    break;
+                case 'tan':
+                    res = Math.tan(a);
+                    break;
+                case 'absolute':
+                    res = Math.abs(a);
+                    break;
+                case 'square':
+                    res = Math.pow(a, b);
+                    break;
+                case 'sqrt':
+                    res = Math.pow(a, 1/b);
+                    break;
+            }
+            result.innerHTML = res;
+        });
+       
+    </script>
+
+</body>
+</html>

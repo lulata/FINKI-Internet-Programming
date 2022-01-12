@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Forma za vnesuvajne oceni</h1>
+    <br />
+    <label for="ime">Ime</label>
+    <input type="text" id="ime" />
+    <br />
+    <label for="prezime">Prezime</label>
+    <input type="text" id="prezime" />
+    <br />
+    <label for="ocena">Indeks</label>
+    <input type="text" id="indeks" />
+    <br />
+    <label for="predmet">Predmet</label>
+    <input type="text" id="predmet" />
+    <br />
+    <label for="ocena">Ocena</label>
+    <select name="ocena" id="ocena">
+      <option value="5">5</option>
+      <option value="6">6</option>
+      <option value="7">7</option>
+      <option value="8">8</option>
+      <option value="9">9</option>
+      <option value="10">10</option>
+    </select>
+
+    <br />
+    <button id="submit">Vnesi</button>
+    <br />
+    <br />
+    <div id="rezultati">
+      <table>
+        <tr>
+          <th>Ime</th>
+          <th>Prezime</th>
+          <th>Indeks</th>
+          <th>Predmet</th>
+          <th>Ocena</th>
+        </tr>
+      </table>
+    </div>
+    <script>
+      var submit = document.getElementById("submit");
+
+      function saveDataAsObjects(data) {
+        var dataAsObjects = [];
+        for (var i = 0; i < data.length; i++) {
+          var dataAsObject = {
+            ime: data[i].ime,
+            prezime: data[i].prezime,
+            indeks: data[i].indeks,
+            predmet: data[i].predmet,
+            ocena: data[i].ocena,
+          };
+          dataAsObjects.push(dataAsObject);
+        }
+        localStorage.setItem("dataAsObjects", JSON.stringify(dataAsObjects));
+      }
+
+      function saveData() {
+        var data = [];
+        var ime = document.getElementById("ime").value;
+        var prezime = document.getElementById("prezime").value;
+        var indeks = document.getElementById("indeks").value;
+        var predmet = document.getElementById("predmet").value;
+        var ocena = document.getElementById("ocena").value;
+        var dataAsObject = {
+          ime: ime,
+          prezime: prezime,
+          indeks: indeks,
+          predmet: predmet,
+          ocena: ocena,
+        };
+        data.push(dataAsObject);
+        saveDataAsObjects(data);
+        document.getElementById("ime").value = "";
+        document.getElementById("prezime").value = "";
+        document.getElementById("indeks").value = "";
+        document.getElementById("predmet").value = "";
+        document.getElementById("ocena").value = "";
+        displayData();
+      }
+
+      function displayData() {
+        var data = JSON.parse(localStorage.getItem("dataAsObjects"));
+        var table = document.getElementsByTagName("table")[0];
+        for (var i = 0; i < data.length; i++) {
+          var row = table.insertRow(i + 1);
+          var cell1 = row.insertCell(0);
+          var cell2 = row.insertCell(1);
+          var cell3 = row.insertCell(2);
+          var cell4 = row.insertCell(3);
+          var cell5 = row.insertCell(4);
+          cell1.innerHTML = data[i].ime;
+          cell2.innerHTML = data[i].prezime;
+          cell3.innerHTML = data[i].indeks;
+          cell4.innerHTML = data[i].predmet;
+          cell5.innerHTML = data[i].ocena;
+        }
+      }
+
+        submit.addEventListener("click", saveData);
+    </script>
+  </body>
+</html>

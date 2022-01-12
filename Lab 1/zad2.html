@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div class="number"></div>
+    <script> 
+        number=prompt("Enter a number");
+        if(number.length==9){
+            first3=number.substr(0,3);
+            middle3=number.substr(3,3);
+            last3=number.substr(6,3);
+            
+            if(first3.charAt(2)==0 || first3.charAt(2)==1 || first3.charAt(2)==2){
+                operator="T-mobile";
+            }else if(first3.charAt(2)==5 || first3.charAt(2)==6){
+                operator="One";
+            }else if(first3.charAt(2)==7 || first3.charAt(2)==8){
+                operator="Vip";
+            }
+            phone=document.querySelector(".number");
+            phone.innerHTML=first3+" / "+middle3+" - "+last3+"<br>The operator is:"+operator;
+        }
+        else{
+            alert("Number must be 9 digits");
+        }
+        
+        
+    </script>
+</body>
+</html>

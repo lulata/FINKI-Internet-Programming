@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <label for="array">Insert array with comas</label>
+    <br />
+    <input type="text" id="array" />
+    <button id="btn">Submit</button>
+    <div>
+      <p>Output without duplicates:</p>
+      <span id="output"></span>
+    </div>
+
+    <script>
+      var array = document.getElementById("array");
+      var output = document.getElementById("output");
+      var btn = document.getElementById("btn");
+      function removeDuplicates(arr) {
+        var unique = [];
+        for (var i = 0; i < arr.length; i++) {
+          if (unique.indexOf(arr[i]) == -1) {
+            unique.push(arr[i]);
+          }
+        }
+        return unique;
+      }
+      btn.addEventListener("click", function () {
+        var arr = array.value.split(",");
+        var unique = removeDuplicates(arr);
+        output.innerHTML = unique;
+      });
+    </script>
+  </body>
+</html>

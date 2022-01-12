@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="sign"></div>
+    <script>
+        numbers=prompt("Enter numbers");
+        minus=0;
+        numbers=numbers.split(",");
+        for(i=0;i<numbers.length;i++){
+            if(numbers[i]<0){
+                minus++;
+            }
+        }if(minus%2==0){
+            document.querySelector(".sign").innerHTML="The sign is +";
+        }else{
+            document.querySelector(".sign").innerHTML="The sign is -";
+        }
+    </script>
+</body>
+</html>

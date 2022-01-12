@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .containerChange{
+            width: 70vw;
+            height: 70vh;
+        }
+    </style>
+</head>
+<body>
+    <h1>Promena na pozadina</h1>
+    <div class="containerChange">
+        <input type="radio" name="background" id="color">
+        <label for="color">Color</label>
+        <input type="radio" name="background" id="image">
+        <label for="image">Image</label>
+        <br>
+        <label for="value">Value</label>
+        <input type="text" id="value">
+        <br>
+        <button id="submit">Promeni</button>
+        <br>
+    </div>
+
+    <script>
+        var submit = document.getElementById("submit");
+
+        submit.addEventListener("click", function () {
+            var value = document.getElementById("value").value;
+            var color = document.getElementById("color");
+            var image = document.getElementById("image");
+            var container = document.querySelector(".containerChange");
+
+            if (color.checked) {
+                container.style.backgroundColor = value;
+            } else if (image.checked) {
+                container.style.backgroundImage = "url(" + value + ")";
+            }
+        });
+    </script>
+</body>
+</html>
